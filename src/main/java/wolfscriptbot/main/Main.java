@@ -12,6 +12,7 @@ import wolfscriptbot.listener.ChatListener;
 import wolfscriptbot.listener.CommandListener;
 import wolfscriptbot.listener.ReadyListener;
 import wolfscriptbot.object.bot.Bot;
+import wolfscriptbot.services.AnimalService;
 import wolfscriptbot.services.ClanService;
 import wolfscriptbot.services.WolfesService;
 
@@ -28,6 +29,8 @@ public class Main {
 
     private ClanService clanService;
     private WolfesService wolfesService;
+    private AnimalService animalService;
+
     public static Main INSTANCE;
     public static ShardManager shardMan;
 
@@ -50,6 +53,9 @@ public class Main {
 
         wolfesService = new WolfesService();
         clanService = new ClanService();
+        animalService = new AnimalService();
+
+        animalService.createRandomAnimals();
 
         try {
             DefaultShardManagerBuilder builders = DefaultShardManagerBuilder.createDefault(new Bot().getBotToken());
@@ -117,5 +123,9 @@ public class Main {
 
     public WolfesService getWolfesService() {
         return wolfesService;
+    }
+
+    public AnimalService getAnimalService() {
+        return animalService;
     }
 }

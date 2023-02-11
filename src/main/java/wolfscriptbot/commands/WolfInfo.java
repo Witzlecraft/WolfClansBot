@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.*;
 import wolfscriptbot.commands.types.ServerCommand;
 import wolfscriptbot.main.Main;
 import wolfscriptbot.object.Wolf;
+import wolfscriptbot.object.bot.Bot;
 import wolfscriptbot.services.ClanService;
 import wolfscriptbot.services.WolfesService;
 
@@ -24,38 +25,49 @@ public class WolfInfo implements ServerCommand {
         String[] args = message.getContentDisplay().split(" ");
 
         if(args.length == 1) {
-
             Wolf wolf = wolfesService.getWolfFromUserId(member.getIdLong());
+            sendInfo(wolf, channel);
+        } else if(args.length == 2) {
 
-            EmbedBuilder ebf = new EmbedBuilder();
-            ebf.setTitle("Your WolfInfo", null);
-            ebf.setColor(Color.green);
-            ebf.setColor(new Color(0xF40C0C));
-            ebf.setColor(new Color(255, 0, 54));
-            ebf.addField("Health", wolf.getHealth()+"", false);
-            ebf.addField("Enegie", wolf.getEnergie()+"", false);
-
-            if (wolf.getClan() == null) {
-                ebf.addField("Clan", "have no clan", false);
-            } else {
-                ebf.addField("Clan", wolf.getClan().getName(), false);
+            if(!(member.getIdLong() == new Bot().getAuthorId())) {
+                channel.sendMessage("Only the Bot Author can this!").queue();
+                return;
             }
 
+            if (message.getMentionedMembers().isEmpty()) return;
 
-            ebf.addField("Pets Ammount", wolf.getPets()+"", false);
-            ebf.addField("Position",  "X: " + wolf.getX() + "\nY: " + wolf.getY(), false);
-            ebf.addField("Hungry",  wolf.getHungry()+"", false);
-            channel.sendMessageEmbeds(ebf.build()).queue();
+            Member mentionedMember = message.getMentionedMembers().get(message.getMentionedMembers().size()-1);
+            if (!wolfesService.isUserAWolf(mentionedMember.getIdLong())) {
+                wolfesService.registerAWolf(mentionedMember.getIdLong());
+            }
+            Wolf wolf = wolfesService.getWolfFromUserId(mentionedMember.getIdLong());
 
-
-
-
-            System.out.println();
-        }// else {
-        //	EmbedBox.createBox(channel, "Fehler!", "Gebe eine ID vom User an!", Color.green, 0xF40C0C);
-        //}
+            sendInfo(wolf, channel);
+        }
 
 
+    }
+
+
+    private void sendInfo(Wolf wolf, TextChannel channel) {
+        EmbedBuilder ebf = new EmbedBuilder();
+        ebf.setTitle("WolfInfo", null);
+        ebf.setColor(Color.green);
+        ebf.setColor(new Color(0xF40C0C));
+        ebf.setColor(new Color(255, 0, 54));
+        ebf.addField("Health", wolf.getHealth()+"", false);
+        ebf.addField("Enegie", wolf.getEnergie()+"", false);
+
+        if (wolf.getClan() == null) {
+            ebf.addField("Clan", "have no clan", false);
+        } else {
+            ebf.addField("Clan", wolf.getClan().getName(), false);
+        }
+
+        ebf.addField("Pets Ammount", wolf.getPets()+"", false);
+        ebf.addField("Position",  "X: " + wolf.getX() + ", Y: " + wolf.getY(), false);
+        ebf.addField("Hungry",  wolf.getHungry()+"", false);
+        channel.sendMessageEmbeds(ebf.build()).queue();
     }
 
 

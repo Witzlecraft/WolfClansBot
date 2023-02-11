@@ -4,7 +4,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import wolfscriptbot.commands.types.ServerCommand;
 import wolfscriptbot.main.Main;
+import wolfscriptbot.object.Clan;
 import wolfscriptbot.object.Wolf;
+import wolfscriptbot.object.bot.Bot;
 import wolfscriptbot.services.ClanService;
 import wolfscriptbot.services.WolfesService;
 
@@ -22,28 +24,23 @@ public class WolfClans implements ServerCommand {
 
         String[] args = message.getContentDisplay().split(" ");
 
+        if(!(member.getIdLong() == new Bot().getAuthorId())) {
+            channel.sendMessage("Only the Bot Author can this!").queue();
+        }
+
         if(args.length == 1) {
-
-            Wolf wolf = wolfesService.getWolfFromUserId(member.getIdLong());
-
             EmbedBuilder ebf = new EmbedBuilder();
             ebf.setTitle("Clans", null);
             ebf.setColor(Color.green);
             ebf.setColor(new Color(0xF40C0C));
             ebf.setColor(new Color(255, 0, 54));
-            ebf.addField("Health", wolf.getHealth()+"", false);
-            ebf.addField("Enegie", wolf.getEnergie()+"", false);
-
-            if (wolf.getClan() == null) {
-                ebf.addField("Clan", "have no clan", false);
-            } else {
-                ebf.addField("Clan", wolf.getClan().getName(), false);
+            ebf.addField("--------------------", "", false);
+            for (Clan clan : clanService.getClans().values()) {
+                ebf.addField("Clan Name:", clan.getName(), false);
+                ebf.addField("Owner: ", Main.shardMan.retrieveUserById(clan.getOwnerid()).complete().getAsTag() + " (" + clan.getOwnerid() + ")", false);
+                ebf.addField("Member count:", clan.getMembers().size()+"", false);
+                ebf.addField("--------------------", "", false);
             }
-
-
-            ebf.addField("Pets Ammount", wolf.getPets()+"", false);
-            ebf.addField("Position",  "X: " + wolf.getX() + "\nY: " + wolf.getY(), false);
-            ebf.addField("Hungry",  wolf.getHungry()+"", false);
             channel.sendMessageEmbeds(ebf.build()).queue();
 
 

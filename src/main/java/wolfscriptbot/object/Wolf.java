@@ -12,6 +12,7 @@ public class Wolf {
     private ClanRole clanRole = ClanRole.NONE;
     private int hungry = 100;
     private int x, y = 0;
+    private boolean dead = false;
 
 
     public int getHealth() {
@@ -84,5 +85,13 @@ public class Wolf {
 
     public ClanRole getClanRole() {
         return clanRole;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
     }
 }

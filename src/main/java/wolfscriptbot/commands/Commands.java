@@ -22,7 +22,7 @@ public class Commands implements ServerCommand {
 
             if(args.length == 1) {
 
-                eb.setTitle("Befehls-Liste", null);
+                eb.setTitle("Commands", null);
                 eb.setDescription("Bot by MorrisBr");
 
                 eb.setColor(Color.red);
@@ -31,9 +31,18 @@ public class Commands implements ServerCommand {
                 eb.setThumbnail(member.getGuild().getIconUrl());
 
 
-                eb.addField("Verwaltung", "**�** !debug\n"
-                                + "**�** !chatmute-user <USERID>\n"
-                                + "**�** !chatmute-server <SERVERID>\n"
+                eb.addField("Info:", "**�** ?cmds\n"
+                                + "**�** ?attack <USER>\n"
+                                + "**�** ?createpack <PACKNAME>\n"
+                                + "**�** ?joinpack <OWNER OF PACK>\n"
+                                + "**�** ?sleep\n"
+                                + "**�** ?wolfinfo\n"
+                                + "**�** ?packinfo\n"
+                                + "**�** ?leavepack\n"
+                                + "**�** ?look\n"
+                                + "**�** ?move <DIRECTION>\n"
+                                + "**�** ?move <DIRECTION> <AMOUNT>\n"
+
                         , false);
 
                 channel.sendMessageEmbeds(eb.build()).queue();

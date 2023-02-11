@@ -3,6 +3,9 @@ package wolfscriptbot.commands;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import wolfscriptbot.commands.types.ServerCommand;
+import wolfscriptbot.object.Animal;
+import wolfscriptbot.services.AnimalService;
+import wolfscriptbot.services.MapService;
 
 import java.awt.*;
 
@@ -16,22 +19,16 @@ public class GetKey implements ServerCommand {
         String[] args = message.getContentDisplay().split(" ");
 
         if(args.length == 1) {
+            MapService mapService = new MapService();
+            AnimalService animalService = new AnimalService();
+            animalService.createRandomAnimals();
 
-            EmbedBuilder ebf = new EmbedBuilder();
-            ebf.setTitle("", null);
-            ebf.setColor(Color.green);
-            ebf.setColor(new Color(0xF40C0C));
-            ebf.setColor(new Color(255, 0, 54));
-            ebf.addField("", "", false);
-            channel.sendMessageEmbeds(ebf.build()).queue();
+            for (Animal animal : animalService.searchAnimals(7,7)) {
+                channel.sendMessage(animal.getAnimalType().name() + "f").queue();
+            }
 
+        }
 
-
-
-            System.out.println();
-        }// else {
-        //	EmbedBox.createBox(channel, "Fehler!", "Gebe eine ID vom User an!", Color.green, 0xF40C0C);
-        //}
 
 
     }
