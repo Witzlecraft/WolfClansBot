@@ -22,7 +22,9 @@ public class CommandManager {
         this.commands = new ConcurrentHashMap<>();
         this.commands.put("commands", new Commands());
         this.commands.put("cmds", new Commands());
+        this.commands.put("sourcecode", new Sourcecode());
         this.commands.put("attack", new Attack());
+        this.commands.put("hunt", new Hunt());
         this.commands.put("wolfinfo", new WolfInfo());
         this.commands.put("wolfclans", new WolfClans());
         this.commands.put("sleep", new Sleep());

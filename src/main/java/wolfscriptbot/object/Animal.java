@@ -13,6 +13,7 @@ public class Animal {
     private int Health = 100;
     private ArrayList<Wolf> hitters = new ArrayList<>();
     private int food = 100;
+    private boolean dead;
     private int id;
     private int x, y;
     private AnimalType animalType = AnimalType.DEER;
@@ -72,6 +73,14 @@ public class Animal {
 
     public int getId() {
         return id;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
     }
 
     public enum AnimalType {

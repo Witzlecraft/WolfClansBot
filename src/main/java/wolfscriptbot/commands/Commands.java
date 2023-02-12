@@ -36,12 +36,14 @@ public class Commands implements ServerCommand {
                                 + "**�** ?createpack <PACKNAME>\n"
                                 + "**�** ?joinpack <OWNER OF PACK>\n"
                                 + "**�** ?sleep\n"
+                                + "**�** ?hunt <ANIMAL ID>\n"
                                 + "**�** ?wolfinfo\n"
                                 + "**�** ?packinfo\n"
                                 + "**�** ?leavepack\n"
                                 + "**�** ?look\n"
                                 + "**�** ?move <DIRECTION>\n"
                                 + "**�** ?move <DIRECTION> <AMOUNT>\n"
+                                + "**�** ?sourcecode\n"
 
                         , false);
 

@@ -84,4 +84,7 @@ public class AnimalService {
         return animalTemp;
     }
 
+    public ArrayList<Animal> getAnimals() {
+        return animals;
+    }
 }

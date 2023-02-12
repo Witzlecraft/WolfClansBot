@@ -33,6 +33,7 @@ public class LookAround implements ServerCommand {
             ebf.setColor(new Color(255, 0, 54));
 
 
+
             Wolf wolf = wolfesService.getWolfFromUserId(member.getIdLong());
             AnimalService animalService = Main.INSTANCE.getAnimalService();
             for (Animal animal : animalService.searchAnimals(wolf.getX(), wolf.getY())) {

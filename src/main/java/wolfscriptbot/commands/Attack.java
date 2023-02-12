@@ -35,7 +35,7 @@ public class Attack implements ServerCommand {
                 Wolf attackedwolf = wolfesService.getWolfFromUserId(mentionedMember.getIdLong());
                 Wolf ownWolf = wolfesService.getWolfFromUserId(member.getIdLong());
 
-                if(!(Math.abs(attackedwolf.getX()-ownWolf.getX()) <= 4) && Math.abs(attackedwolf.getY()-ownWolf.getY()) <= 4) {
+                if(!(Math.abs(ownWolf.getX()-attackedwolf.getX()) <= 4) && Math.abs(ownWolf.getY()-attackedwolf.getY()) <= 4) {
                     EmbedBuilder eb = new EmbedBuilder();
                     eb.setTitle("The wolf track could not be found!", null);
                     eb.setColor(Color.green);
@@ -46,7 +46,7 @@ public class Attack implements ServerCommand {
                     return;
                 }
 
-                if (ownWolf.getClan() != null && ownWolf.getClan().getMembers().contains(attackedwolf)) {
+                if (ownWolf.getClan() != null && ownWolf.getClan().getMembers().contains(attackedwolf) && !ownWolf.getClan().isWolfClanOwner(ownWolf)) {
                     channel.sendMessage("Really? Are you really such a dirty traitor?").queue();
                     return;
                 }
